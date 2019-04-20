@@ -9,16 +9,12 @@ class App extends Component {
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <p>
-            Edit <code>src/App.js</code> and save to reload.
+            Nothing to do here for now :) You should look at the{' '}
+            <a className={'pink'} href="http://localhost:8080/graphql">
+              playground
+            </a>
+            .
           </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
         </header>
       </div>
     )
