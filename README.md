@@ -28,6 +28,14 @@ yarn dev
 
 Your browser should open a new tab for http://localhost:3000/.
 
+## Workshop walkthrough
+
+1. Slides part 1: Quick GraphQL recap
+2. Slides part 2: Subscriptions, or how to deal with async events
+3. Workshop Step 1: Putting in place subscriptions server-side
+4. Workshop Step 2: Basic subscriptions with React
+5. Workshop Step 3: Filtering and security
+
 ## Useful resources
 
 [apollo subscriptions](https://www.apollographql.com/docs/apollo-server/features/subscriptions)

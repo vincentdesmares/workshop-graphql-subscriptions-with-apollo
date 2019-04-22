@@ -11,9 +11,11 @@ const spdyOptions = {
 
 apolloServer.applyMiddleware({ app })
 
-const mainServer = http.createServer(spdyOptions, app)
+const httpServer = http.createServer(spdyOptions, app)
+
+apolloServer.installSubscriptionHandlers(httpServer)
 
 const PORT = process.env.PORT || 8080
-mainServer.listen(PORT, () => {
+httpServer.listen(PORT, () => {
   debug(`http/https/h2 server runs on ${PORT}`)
 })

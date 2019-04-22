@@ -1,16 +1,26 @@
 const { ApolloServer, gql } = require('apollo-server-express')
 
-// This is a (sample) collection of books we'll be able to query
+const { PubSub } = require('apollo-server')
+
+const pubsub = new PubSub()
+
+const BOOK_ADDED = 'BOOK_ADDED'
+
+// This is a (sample) collection of articles we'll be able to query
 // the GraphQL server for.  A more complete example might fetch
 // from an existing data source like a REST API or database.
-const books = [
+const articles = [
   {
-    title: 'Harry Potter and the Chamber of Secrets',
-    author: 'J.K. Rowling'
+    id: 1,
+    title: 'Apollo with subscriptions',
+    author: 'Vincent Desmares',
+    votes: 0
   },
   {
-    title: 'Jurassic Park',
-    author: 'Michael Crichton'
+    id: 2,
+    title: 'Are Robots our enemies?',
+    author: 'Isaac Asimov',
+    votes: 0
   }
 ]
 
@@ -19,13 +29,15 @@ const books = [
 const typeDefs = gql`
   # Comments in GraphQL are defined with the hash (#) symbol.
 
-  # This "Book" type can be used in other type declarations.
-  type Book {
+  # This "Article" type can be used in other type declarations.
+  type Article {
+    id: Int
     title: String
     author: String
+    votes: Int
   }
 
-  input BookInput {
+  input ArticleInput {
     title: String
     author: String
   }
@@ -33,24 +45,46 @@ const typeDefs = gql`
   # The "Query" type is the root of all GraphQL queries.
   # (A "Mutation" type will be covered later on.)
   type Query {
-    books: [Book]
+    articles: [Article]
   }
 
   type Mutation {
-    addBook(book: BookInput): Book
+    addArticle(article: ArticleInput): Article
+    vote(articleId: Int): Article
+  }
+
+  type Subscription {
+    articleAdded: Article
   }
 `
 
 // Resolvers define the technique for fetching the types in the
-// schema.  We'll retrieve books from the "books" array above.
+// schema.  We'll retrieve articles from the "articles" array above.
 const resolvers = {
   Query: {
-    books: () => books
+    articles: () => articles
   },
   Mutation: {
-    addBook: (root, args, context) => {
-      books.push(args.book)
-      return args.book
+    addArticle: (root, args, context) => {
+      articles.push(args.article)
+      pubsub.publish(BOOK_ADDED, { articleAdded: args })
+      return args.article
+    },
+    vote: (root, args, context) => {
+      const articleIndex = articles.findIndex(
+        article => article.id === args.articleId
+      )
+      if (articleIndex === -1) {
+        throw new Error('Article not found.')
+      }
+      articles[articleIndex].votes += 1
+      return articles[articleIndex]
+    }
+  },
+  Subscription: {
+    articleAdded: {
+      // Additional event labels can be passed to asyncIterator creation
+      subscribe: () => pubsub.asyncIterator([BOOK_ADDED])
     }
   }
 }
