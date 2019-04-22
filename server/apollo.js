@@ -4,7 +4,8 @@ const { PubSub } = require('apollo-server')
 
 const pubsub = new PubSub()
 
-const BOOK_ADDED = 'BOOK_ADDED'
+const ARTICLE_ADDED = 'ARTICLE_ADDED'
+const VOTE_ADDED = 'VOTE_ADDED'
 
 // This is a (sample) collection of articles we'll be able to query
 // the GraphQL server for.  A more complete example might fetch
@@ -55,6 +56,7 @@ const typeDefs = gql`
 
   type Subscription {
     articleAdded: Article
+    voteAdded(articleId: Int): Article
   }
 `
 
@@ -67,7 +69,7 @@ const resolvers = {
   Mutation: {
     addArticle: (root, args, context) => {
       articles.push(args.article)
-      pubsub.publish(BOOK_ADDED, { articleAdded: args })
+      pubsub.publish(ARTICLE_ADDED, { articleAdded: args })
       return args.article
     },
     vote: (root, args, context) => {
@@ -78,13 +80,18 @@ const resolvers = {
         throw new Error('Article not found.')
       }
       articles[articleIndex].votes += 1
+      pubsub.publish(VOTE_ADDED, { voteAdded: articles[articleIndex] })
       return articles[articleIndex]
     }
   },
   Subscription: {
     articleAdded: {
       // Additional event labels can be passed to asyncIterator creation
-      subscribe: () => pubsub.asyncIterator([BOOK_ADDED])
+      subscribe: () => pubsub.asyncIterator([ARTICLE_ADDED])
+    },
+    voteAdded: {
+      // Additional event labels can be passed to asyncIterator creation
+      subscribe: () => pubsub.asyncIterator([VOTE_ADDED])
     }
   }
 }
