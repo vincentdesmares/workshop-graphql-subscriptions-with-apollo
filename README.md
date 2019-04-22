@@ -35,7 +35,7 @@ git checkout step-1
 yarn dev
 ```
 
-Your browser should open a new tab for http://localhost:3000/.
+Your browser should open a new tab with the [Landing page][landing-page].
 
 ## Workshop walkthrough
 
@@ -47,27 +47,49 @@ Your browser should open a new tab for http://localhost:3000/.
 
 ## Base branches
 
-For each step there is a base branch you can start from. Master is equivalent to the step3.
+For each step there is a base branch you can start from. Master is equivalent to the step 3.
 If you could not finish a step in time, you can just checkout the next one and try to solve your issue later.
+
+# Step 1 goal
 
 ```
 git checkout step-1
 ```
 
+- Open the [playground][playground-url]
+- Add a Subscription called bookAdded
+- You must be able to call the subscription in a playground tab
+- When you call the addBook mutation in another tab you should see the new book in the subscription tab
+
+# Step 2 goal
+
 ```
 git checkout step-2
 ```
+
+- Open the [Landing page][landing-page]
+- Open again the [Landing page][landing-page] in another window
+- When one clicks on the vote button, the votes must increase in the other window too
+- When one clicks on the vote button, the vote animation must run in the other window too
+
+# Step 3 goal
 
 ```
 git checkout step-3
 ```
 
+- When an article is added it should appear on all tabs
+- Add a 'groupId' field to the article model
+- One should only see articles belonging to this group
+- One should only receive push data related to his group
+- Subscriptions data should only be sent to the matching scopes. Avoid over-sending informations.
+
 ## Useful resources
 
-[Learning GraphQL](https://www.howtographql.com/)
-[Apollo Server subscriptions](https://www.apollographql.com/docs/apollo-server/features/subscriptions)
-[Apollo Client subscriptions](https://www.apollographql.com/docs/react/advanced/subscriptions)
-[GraphQL Specifications](https://graphql.github.io/graphql-spec/June2018/#sec-Subscription)
+- [Learning GraphQL](https://www.howtographql.com/)
+- [Apollo Server subscriptions](https://www.apollographql.com/docs/apollo-server/features/subscriptions)
+- [Apollo Client subscriptions](https://www.apollographql.com/docs/react/advanced/subscriptions)
+- [GraphQL Specifications](https://graphql.github.io/graphql-spec/June2018/#sec-Subscription)
 
 ## Need help?
 
@@ -78,5 +100,7 @@ You can reach me by [twitter][my-twitter] or by [email][my-email].
 [yarn-install]: https://yarnpkg.com/en/docs/install#mac-stable
 [prs-badge]: https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square
 [prs]: http://makeapullrequest.com
+[landing-page]: http://localhost:3000
+[playground-url]: http://localhost:8080/graphql
 [my-twitter]: https://twitter.com/cold_lestat
 [my-email]: mailto:vincent.desmares@gmail.com
