@@ -32,7 +32,7 @@
     "tachyons": "^4.11.1"
   },
   "scripts": {
-    "dev": "pm2 delete all -s; pm2 startOrReload ecosystem.config.js && pm2 start react-scripts --name web -- start",
+    "dev": "./node_modules/.bin/pm2 delete all -s; ./node_modules/.bin/pm2 startOrReload ecosystem.config.js && ./node_modules/.bin/pm2 start react-scripts --name web -- start",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
