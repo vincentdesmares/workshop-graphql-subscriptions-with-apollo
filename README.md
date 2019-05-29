@@ -86,6 +86,7 @@ git checkout step-3
 
 ## Useful resources
 
+- [Introduction to Subscriptions slides](https://docs.google.com/presentation/d/1CguNFEPa-RGYmL8G-GjBYmx1vU92TuxtAbnZfRyRyZM/edit?usp=sharing)
 - [Learning GraphQL](https://www.howtographql.com/)
 - [Apollo Server subscriptions](https://www.apollographql.com/docs/apollo-server/features/subscriptions)
 - [Apollo Client subscriptions](https://www.apollographql.com/docs/react/advanced/subscriptions)
